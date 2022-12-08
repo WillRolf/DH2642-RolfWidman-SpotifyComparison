@@ -1,13 +1,11 @@
 import SpotifyModel from "./SpotifyModel.js";
 import { getSongDetails } from "./SpotifySource.js";
 import firebaseConfig from "./firebaseConfig.js";
-import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
-
+import firebase from "firebase/app";
+import "firebase/database";
 
 // Initialise firebase
-const firebase = initializeApp(firebaseConfig);
-const Dbase = getDatabase();
+firebase.initializeApp(firebaseConfig);
 
 function observerRecap(model) {
     function checkPayload(payload) {
@@ -28,7 +26,7 @@ function firebaseModelPromise() {
     function makeSongPromiseCB(songId){
         return getSongDetails(songId);
     }
-    return firebase.database().ref(Dbase).once("value").then(makeBigPromiseACB);
+    return firebase.database().ref().once("value").then(makeBigPromiseACB);
 }
 
 function updateFirebaseFromModel(model) {
@@ -36,10 +34,10 @@ function updateFirebaseFromModel(model) {
         if (!payload || payload<0 ) { return; }
         
         else if(payload.firstSong){
-            firebase.database().ref(Dbase +"/firstSong").set(model.firstSong)
+            firebase.database().ref("/firstSong").set(model.firstSong)
         }
         else if(payload.secondSong){
-            firebase.database().ref(Dbase +"/secondSong").set(model.secondSong)
+            firebase.database().ref("/secondSong").set(model.secondSong)
         }
         /*
         else if (payload.addToPlaylist) {
@@ -57,10 +55,10 @@ console.log(updateFirebaseFromModel)
 
 function updateModelFromFirebase(model) {
     function songChangedInFirebaseACB(firebaseData){ model.setFirstSong(firebaseData.val());}
-    firebase.database().ref(Dbase +"/firstSong").on("value", songChangedInFirebaseACB);
+    firebase.database().ref("/firstSong").on("value", songChangedInFirebaseACB);
 
     function songChangedInFirebaseACB(firebaseData){ model.setSecondSong(firebaseData.val());}
-    firebase.database().ref(Dbase +"/secondSong").on("value", songChangedInFirebaseACB);
+    firebase.database().ref("/secondSong").on("value", songChangedInFirebaseACB);
 
     function songAddedInFirebaseACB(firebaseData){
         function responseSongDataACB(song) {
@@ -76,10 +74,10 @@ function updateModelFromFirebase(model) {
             getSongDetails(+firebaseData.key).then(responseSongDataACB);
         }
     }
-    firebase.database().ref(Dbase +"/songs").on("child_added", songAddedInFirebaseACB);
+    firebase.database().ref("/songs").on("child_added", songAddedInFirebaseACB);
 
     function songRemovedInFirebaseACB(firebaseData){ model.removeFromMenu({ id: +firebaseData.key });}
-    firebase.database().ref(Dbase +"/songs").on("child_removed",  songRemovedInFirebaseACB);
+    firebase.database().ref("/songs").on("child_removed",  songRemovedInFirebaseACB);
     return;
 }
 export {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase};

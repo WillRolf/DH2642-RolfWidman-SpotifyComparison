@@ -1,28 +1,31 @@
 function SearchResultsView(props){
     function showSearchResultsCB(result){
+        //const trackImage = result.data.visuals.avatarImage.sources[0].url;
+        //console.log(trackImage)
+        // result.data.name?result.data.albumOfTrack.coverArt.sources[0].url:trackImage
         function onSearchResultACB(){ 
             props.onSearchResult(result);
             /* TODO window.location.hash = "#details"; */
         }
         function returnCoverCB(){
-            if (result.data.name){
+            if (result.data.profile.name){
                 return result.data.albumOfTrack.coverArt.sources[0].url
             }
             return result.data.visuals.avatarImage.sources[0].url
         }
         function returnNameCB(){
-            if (result.data.name){
-                return result.data.name
+            if (result.data.profile.name){
+                return result.data.profile.name
             }
             return result.data.profile.name
         }
         return (
             <span class="searchResult"
             onClick={onSearchResultACB}>
-                <img src={returnCoverCB}height="100">
+                <img src={result}height="100">
                 </img>
                 <div>
-                    {returnNameCB}
+                    {result.data.name?result.data.name:result.data.profile.name}
                 </div>
             </span>
         );

@@ -14,16 +14,18 @@ function treatHTTPResponseACB(response){
 }
 
 function transformSearchResultACB(data){
-  return data.results;
+  if (data.artists){ return data.artists.items }
+  if (data.tracks){ return data.tracks.items }
 }
 
 function getSongDetails(id){
   return fetch(BASE_URL+'tracks/?ids='+id, options)
     .then(treatHTTPResponseACB);
 }
-
+ /*+ '&type=multi&offset=0&limit=10&numberOfTopResults=5'*/
+ /* + new URLSearchParams(params)*/
 function searchSpotify(params){
-  return fetch(BASE_URL+'search/' + new URLSearchParams(params) /*+ '&type=multi&offset=0&limit=10&numberOfTopResults=5'*/, options)
+  return fetch(BASE_URL+'search/?q=' + params.query + '&type=' + params.type, options)
     .then(treatHTTPResponseACB).then(transformSearchResultACB);
 }
 
