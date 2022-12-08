@@ -8,7 +8,6 @@ import { getDatabase } from "firebase/database";
 // Initialise firebase
 const firebase = initializeApp(firebaseConfig);
 const Dbase = getDatabase();
-const REF = "SpotifyModel31"
 
 function observerRecap(model) {
     function checkPayload(payload) {
@@ -29,7 +28,7 @@ function firebaseModelPromise() {
     function makeSongPromiseCB(songId){
         return getSongDetails(songId);
     }
-    return firebase.database().ref(Dbase + REF).once("value").then(makeBigPromiseACB);
+    return firebase.database().ref(Dbase).once("value").then(makeBigPromiseACB);
 }
 
 function updateFirebaseFromModel(model) {
@@ -37,17 +36,17 @@ function updateFirebaseFromModel(model) {
         if (!payload || payload<0 ) { return; }
         
         else if(payload.firstSong){
-            firebase.database().ref(Dbase + REF +"/firstSong").set(model.firstSong)
+            firebase.database().ref(Dbase +"/firstSong").set(model.firstSong)
         }
         else if(payload.secondSong){
-            firebase.database().ref(Dbase + REF +"/secondSong").set(model.secondSong)
+            firebase.database().ref(Dbase +"/secondSong").set(model.secondSong)
         }
         /*
         else if (payload.addToPlaylist) {
-            firebase.database().ref(Dbase + REF +"/songs/"+ payload.addToPlaylist.id).set(payload.addToPlaylist.name)
+            firebase.database().ref(Dbase +"/songs/"+ payload.addToPlaylist.id).set(payload.addToPlaylist.name)
         }
         else if (payload.removeFromPlaylist) {
-            firebase.database().ref(Dbase + REF +"/songs/"+ payload.removeFromPlaylist.id).set(null)
+            firebase.database().ref(Dbase +"/songs/"+ payload.removeFromPlaylist.id).set(null)
         }    
         */
     }
@@ -58,10 +57,10 @@ console.log(updateFirebaseFromModel)
 
 function updateModelFromFirebase(model) {
     function songChangedInFirebaseACB(firebaseData){ model.setFirstSong(firebaseData.val());}
-    firebase.database().ref(Dbase + REF +"/firstSong").on("value", songChangedInFirebaseACB);
+    firebase.database().ref(Dbase +"/firstSong").on("value", songChangedInFirebaseACB);
 
     function songChangedInFirebaseACB(firebaseData){ model.setSecondSong(firebaseData.val());}
-    firebase.database().ref(Dbase + REF +"/secondSong").on("value", songChangedInFirebaseACB);
+    firebase.database().ref(Dbase +"/secondSong").on("value", songChangedInFirebaseACB);
 
     function songAddedInFirebaseACB(firebaseData){
         function responseSongDataACB(song) {
@@ -77,10 +76,10 @@ function updateModelFromFirebase(model) {
             getSongDetails(+firebaseData.key).then(responseSongDataACB);
         }
     }
-    firebase.database().ref(Dbase + REF +"/songs").on("child_added", songAddedInFirebaseACB);
+    firebase.database().ref(Dbase +"/songs").on("child_added", songAddedInFirebaseACB);
 
     function songRemovedInFirebaseACB(firebaseData){ model.removeFromMenu({ id: +firebaseData.key });}
-    firebase.database().ref(Dbase + REF +"/songs").on("child_removed",  songRemovedInFirebaseACB);
+    firebase.database().ref(Dbase +"/songs").on("child_removed",  songRemovedInFirebaseACB);
     return;
 }
 export {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase};

@@ -13,7 +13,7 @@ window.firebase=firebase;
 import "../views/navigation.js";
 
 // using require() instead of import, for the above assignments to take effect before VueRoot is loaded
-const VueRoot=require("/src/vuejs/VueRoot.js").default;
+import VueRoot from "/src/vuejs/VueRoot.js"
 
 // TODO render VueRoot into the "root" div
 render(

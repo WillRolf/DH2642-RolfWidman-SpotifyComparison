@@ -1,6 +1,6 @@
-import promiseNoData from "../views/promiseNoData.js";
-import SearchFormView from "../views/searchFormView.js";
-import SearchResultsView from "../views/searchResultsView.js";
+import promiseNoData from "../views/promiseNoData.jsx";
+import SearchFormView from "../views/searchFormView.jsx";
+import SearchResultsView from "../views/searchResultsView.jsx";
 import { searchSpotify } from "../spotifySource.js"
 import resolvePromise from "../resolvePromise.js"
 
