@@ -34,7 +34,9 @@ function SearchFormView(props){
         </select>
         <button
         class="searchbox"
+        style="margin:5px"
         onClick={onButtonPressACB}>
+            Search!
         </button>
     </div>
     );
