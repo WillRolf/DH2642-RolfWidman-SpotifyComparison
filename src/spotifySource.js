@@ -22,8 +22,7 @@ function getSongDetails(id){
   return fetch(BASE_URL+'tracks/?ids='+id, options)
     .then(treatHTTPResponseACB);
 }
- /*+ '&type=multi&offset=0&limit=10&numberOfTopResults=5'*/
- /* + new URLSearchParams(params)*/
+
 function searchSpotify(params){
   return fetch(BASE_URL+'search/?q=' + params.query + '&type=' + params.type, options)
     .then(treatHTTPResponseACB).then(transformSearchResultACB);

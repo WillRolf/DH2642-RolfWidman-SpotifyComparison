@@ -18,12 +18,12 @@ function SearchFormView(props){
     return (
     <div>
         <input
-        class="searchbox"
+        class="rounded"
         onChange={onInputChangeACB}
         placeholder="Search...">
         </input>
         <select
-        class="searchbox"
+        class="button"
         onChange={onOptionChoiceACB}>
             <option value="">
                 Choose:
@@ -33,7 +33,7 @@ function SearchFormView(props){
             }
         </select>
         <button
-        class="searchbox"
+        class="button"
         style="margin:5px"
         onClick={onButtonPressACB}>
             Search!

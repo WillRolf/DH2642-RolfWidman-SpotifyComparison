@@ -3,11 +3,17 @@ import Show from "../presenters/show.jsx"
 
 export default
 function App(props){
-    return (<div class="flexParent">
+    return (<div><div class="topnav">
+                <a onClick={window.location.hash="#search"}>Home</a>
+                <a onClick={window.location.hash="#search"}>Playlist</a>
+                <a onClick={window.location.hash="#search"}>About</a>
+            </div>
+            <div class="flexParent">
                 <div class="mainContent">
                 </div>
-                <Show hash="#search"><Search model={props.model} /></Show>
+                <div class="sidebar"><Show hash="#search"><Search model={props.model} /></Show></div>
             </div>
+        </div>
            );
 }
 /*

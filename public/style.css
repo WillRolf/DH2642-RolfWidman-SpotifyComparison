@@ -1,23 +1,86 @@
+.topnav {
+    overflow: hidden;
+    background-color: rgb(30, 215, 96);
+}
+  
+.topnav a {
+    float: left;
+    color: rgb(25, 20, 20);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: "Trebuchet MS", "sans-serif";
+    font-weight: bold;
+}
+  
+.topnav a:hover {
+    background-color: rgb(27, 167, 76);
+    cursor: pointer;
+}
+
 .flexParent{
     display: flex;
     flex-direction: row;
     height: 100%;
+    background-color: rgb(25, 20, 20);
+    font-family: "Trebuchet MS", "sans-serif";
 }
 
 .mainContent{
-    flex: 0.5;
+    flex: 0.8;
     margin: 3px;
 }
 
-.searchResult{
-    text-align: center;
-    float: left;
-    width: 200px;
-    margin: 10px;
+.sidebar{
+    flex: 0.2;
 }
 
-.searchbox {
+.searchResult{
+    border-style: solid;
     border-radius: 8px;
+    border-color: rgb(30, 215, 96);
+    float: left;
+    width: 350px;
+    margin: 10px;
+    color:rgb(30, 215, 96);
+    content: "";
+    clear: both;
+    display: table;
+    font-family: "Trebuchet MS", "sans-serif";
+}
+
+.searchPic{
+    border-radius: 8px;
+    float: left;
+    margin: 5px;
+}
+
+.searchText{
+    float: left;
+    margin: 10px;
+    color:rgb(30, 215, 96);
+}
+
+.rounded {
+    height: 40px;
+    border-radius: 8px;
+    background-color:rgb(30, 215, 96);
+    font-family: "Trebuchet MS", "sans-serif";
+    font-weight: bold;
+}
+
+.button{
+    height: 40px;
+    border-radius: 8px;
+    background-color:rgb(30, 215, 96);
+    font-family: "Trebuchet MS", "sans-serif";
+    font-weight: bold;
+}
+
+.button:hover{
+    background-color: rgb(27, 167, 76);
+    cursor: pointer;
 }
 
 .hidden{
