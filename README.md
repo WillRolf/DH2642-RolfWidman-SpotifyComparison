@@ -6,11 +6,11 @@ An application for fetching data from a Spotify API, and using this data for a w
 
 ## What we have done so far
 
-So far in the project, the data has been fetched from the API, and the search function used to look up artists or tracks has been implemented. With looking up a track or an artist, the picture associated with them is accompanied with their names in the search results. 
+So far in the project, the data has been fetched from the API, and the search function used to look up artists or tracks has been implemented. With looking up a track or an artist, the name associated with them is displayed. 
 
 ## What we plan to do
 
-We plan to implement a page where the user can see their playlist, as well as a bar on top where the user can change between said playlist page and the home page. We also plan on adding the functionality of being able to put up two songs or artists on the screen and be able to compare them and actually add them to their playlist. Lastly, we plan on trying to implement this game idea in another tab. 
+We plan to implement a page where the user can see their playlist, as well as a bar on top where the user can change between said playlist page and the home page. We also plan on adding the functionality of being able to put up two songs or artists on the screen and be able to compare them and actually add them to their playlist. Lastly, we plan on trying to implement this game idea in another tab. Lastly, pictures are to be added.
 
 ## File structure
 
