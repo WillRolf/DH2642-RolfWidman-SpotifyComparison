@@ -1,5 +1,5 @@
 import Search from "../presenters/searchPresenter.jsx"
-import Show from "../presenters/show.js"
+import Show from "../presenters/show.jsx"
 
 export default
 function App(props){

@@ -16,12 +16,6 @@
     margin: 10px;
 }
 
-svg {
-    color: black;
-    fill: currentColor;
-    padding: 5px;
-}
-
 .searchbox {
     border-radius: 8px;
 }
