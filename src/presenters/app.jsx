@@ -1,3 +1,4 @@
+import Details from "../presenters/detailsPresenter.jsx"
 import Search from "../presenters/searchPresenter.jsx"
 import Show from "../presenters/show.jsx"
 
@@ -9,21 +10,9 @@ function App(props){
                 <a onClick={window.location.hash="#search"}>About</a>
             </div>
             <div class="flexParent">
-                <div class="mainContent">
-                </div>
+                <div class="mainContent"><Show hash="#details"><Details model={props.model} /></Show></div>
                 <div class="sidebar"><Show hash="#search"><Search model={props.model} /></Show></div>
             </div>
         </div>
            );
 }
-/*
-export default
-function App(props){
-    return (<div class="flexParent">
-                <div class="mainContent">
-                </div>
-                Hello World
-            </div>
-           );
-}
-*/
