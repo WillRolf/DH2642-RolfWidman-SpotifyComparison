@@ -18,7 +18,7 @@ function SearchFormView(props){
     return (
     <div>
         <input
-        class="rounded"
+        class="inputBox"
         onChange={onInputChangeACB}
         placeholder="Search...">
         </input>

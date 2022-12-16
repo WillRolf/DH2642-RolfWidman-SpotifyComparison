@@ -1,5 +1,7 @@
 function SearchResultsView(props){
     function showSearchResultsCB(result){
+        function onPlaylistButtonPressACB(){props.onPlaylistButtonPress(result)}
+        console.log(result)
         let image = result.data.name?
                     result.data.albumOfTrack.coverArt.sources[0].url:
                     result.data.visuals.avatarImage?.sources[0].url;
@@ -14,20 +16,21 @@ function SearchResultsView(props){
             return <div>
             {result.data.name?"Type: Song":"Type: Artist"}
             </div>}
-        function onSearchResultACB(){ 
-            props.onSearchResult(result);
-            /* TODO window.location.hash = "#details"; */
+        function getAddToPlaylistButtonCB(){
+            return result.data.name?
+            (<button class="addToPlaylistButton"
+            onClick={onPlaylistButtonPressACB}>
+                Add To Playlist
+            </button>):
+            (<div></div>)
         }
-        return (image==null?"":(
-            <span class="searchResult"
-            onClick={onSearchResultACB}>
+        return (image==null?"":(<div class="searchResult">
+            <span class="searchInfo">
                 <img src={image}
-                    height="100"
                     class="searchPic">
                 </img>
-                {getNameCB()}
-                {getTypeCB()}
-                <div>-----</div>
+                {getNameCB()}<br></br>
+                {getTypeCB()}</span>
                 <button
                 class="button">
                     Add Left
@@ -36,7 +39,8 @@ function SearchResultsView(props){
                 class="button">
                     Add Right
                 </button>
-            </span>
+                {getAddToPlaylistButtonCB()}
+            </div>
         ));
     }
     return (
