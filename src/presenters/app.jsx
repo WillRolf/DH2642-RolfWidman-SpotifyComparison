@@ -15,7 +15,7 @@ function App(props){
             <div class="flexParent">
                 <div class="mainContent">
                     <Show hash="#playlist"><Playlist model={props.model}/></Show>
-                    <Show hash="#home"><Details model={props.model} /></Show>
+                    <Show hash="#home"><div class="details"><Details model={props.model}/></div></Show>
                 </div>
                 <div class="sidebar"><Search model={props.model}/></div>
             </div>

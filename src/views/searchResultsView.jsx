@@ -1,7 +1,8 @@
 function SearchResultsView(props){
     function showSearchResultsCB(result){
-        function onPlaylistButtonPressACB(){props.onPlaylistButtonPress(result)}
-        console.log(result)
+        function onPlaylistButtonPressACB(){ props.onPlaylistButtonPress(result) }
+        function onLeftButtonPressACB(){ props.onLeftButtonPress(result) }
+        function onRightButtonPressACB(){ props.onRightButtonPress(result) }
         let image = result.data.name?
                     result.data.albumOfTrack.coverArt.sources[0].url:
                     result.data.visuals.avatarImage?.sources[0].url;
@@ -32,11 +33,13 @@ function SearchResultsView(props){
                 {getNameCB()}<br></br>
                 {getTypeCB()}</span>
                 <button
-                class="button">
+                class="button"
+                onClick={onLeftButtonPressACB}>
                     Add Left
                 </button>
                 <button
-                class="button">
+                class="button"
+                onClick={onRightButtonPressACB}>
                     Add Right
                 </button>
                 {getAddToPlaylistButtonCB()}

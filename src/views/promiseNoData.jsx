@@ -1,6 +1,7 @@
 function promiseNoData(promiseState){
     if (!promiseState.promise){
-        return <div>No data</div>
+        console.log("No data");
+        return <div></div>
     }
     if (promiseState.error){
         return <div>{promiseState.error.toString()}</div>

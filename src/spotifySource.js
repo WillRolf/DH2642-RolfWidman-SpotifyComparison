@@ -18,8 +18,8 @@ function transformSearchResultACB(data){
   if (data.tracks){ return data.tracks.items }
 }
 
-function getSongDetails(id){
-  return fetch(BASE_URL+'tracks/?ids='+id, options)
+function getDetails(id, path){
+  return fetch(BASE_URL+path+'/?ids='+id, options)
     .then(treatHTTPResponseACB);
 }
 
@@ -28,4 +28,4 @@ function searchSpotify(params){
     .then(treatHTTPResponseACB).then(transformSearchResultACB);
 }
 
-export {getSongDetails, searchSpotify};
+export {getDetails, searchSpotify};

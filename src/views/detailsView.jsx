@@ -1,16 +1,19 @@
 function DetailsView(props){
-    function addToPlaylistClickACB(){ props.onAddToPlaylist(props.songData);
-        window.location.hash = "#search"; }
-    function cancelClickACB(){ window.location.hash = "#search"; }
-    function renderSongsCB(song){
-        return (
-            <span>
-                {song.data.name}
-            </span>
-        );
-    }
-    return (
-        <div>
+    console.log(props.leftData)
+    function addToPlaylistClickACB(){ props.onAddToPlaylist(props.songData); }
+    function cancelClickACB(){  }
+    return (<div class="grid"><table style="width:100%">
+        <tr>
+            <th></th>
+
+        </tr>
+        </table></div>
+    );
+}
+
+export default DetailsView;
+
+{/* <div>
             <div class="details">
                 <p style="font-weight:bolder;">{props.songData.name}</p>
                 <span class="clearfix">
@@ -42,8 +45,4 @@ function DetailsView(props){
                     Cancel
                 </button>
             </div>
-        </div>
-    );
-}
-
-export default DetailsView;
+        </div> */}
