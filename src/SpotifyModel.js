@@ -14,7 +14,7 @@ class SpotifyModel{
     }
 
     addToPlaylist(songToAdd){
-        if (!this.songs.some(song => song.id === songToAdd.id)){
+        if (!this.songs.some(song => song.data.id === songToAdd.data.id)){
             this.songs= [...this.songs, songToAdd];
             this.notifyObservers({addSong: songToAdd});
         }
@@ -22,10 +22,10 @@ class SpotifyModel{
     
     removeFromPlaylist(songToRemove){
         function hasSameIdCB(song){
-            return song.id !== songToRemove.id;
+            return song.data.id !== songToRemove.data.id;
         }
         function findSongCB(song){
-            return song.id === songToRemove.id;
+            return song.data.id === songToRemove.data.id;
         }
         if (this.songs.find(findSongCB)){
             this.songs= this.songs.filter(hasSameIdCB);

@@ -15,8 +15,9 @@ const Search={
         function onSearchQueryACB(text){ this.searchQuery = text; }
         function onSearchTypeACB(choice){ this.searchType = choice; }
         function onSearchACB(){ resolvePromise(searchSpotify({query: this.searchQuery, type: this.searchType}), this.searchResultsPromiseState) }
-        function onSearchResultACB(result){ this.model.setFirstSong(result.id); }
-        function onSearchResultACB(result){ this.model.setSecondSong(result.id); }
+        function onAddToPlaylistACB(song){ this.model.addToPlaylist(song) }
+        //function onSearchResultACB(result){ this.model.setFirstSong(result.id); }
+        //function onSearchResultACB(result){ this.model.setSecondSong(result.id); }
         return (
             <div>
                 <SearchFormView spotifyTypeOptions={["artists", "tracks"]}
@@ -25,8 +26,7 @@ const Search={
                                 onButtonPress={onSearchACB.bind(this)}/>
                 {promiseNoData(this.searchResultsPromiseState)||
                 <SearchResultsView searchResults={this.searchResultsPromiseState.data}
-                                    onSearchResult={onSearchResultACB.bind(this)}/>}
-                
+                                onPlaylistButtonPress={onAddToPlaylistACB.bind(this)}/>}
             </div>
         )
     }

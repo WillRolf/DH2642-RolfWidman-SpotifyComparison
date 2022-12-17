@@ -1,18 +1,24 @@
 import Details from "../presenters/detailsPresenter.jsx"
 import Search from "../presenters/searchPresenter.jsx"
+import Playlist from "../presenters/playlistPresenter.jsx"
 import Show from "../presenters/show.jsx"
 
 export default
 function App(props){
-    return (<div><div class="topnav">
-                <a onClick={window.location.hash="#search"}>Home</a>
-                <a onClick={window.location.hash="#search"}>Playlist</a>
-                <a onClick={window.location.hash="#search"}>About</a>
-            </div>
+    function changeToHomeACB(){window.location.hash="#search"}
+    function changeToPlaylistACB(){window.location.hash="#playlist"}
+    return (<div>
+                <div class="topnav">
+                <a onClick={changeToHomeACB}>Home</a>
+                <a onClick={changeToPlaylistACB}>Playlist</a>
+                </div>
             <div class="flexParent">
-                <div class="mainContent"><Show hash="#details"><Details model={props.model} /></Show></div>
-                <div class="sidebar"><Show hash="#search"><Search model={props.model} /></Show></div>
+                <div class="mainContent">
+                    <Show hash="#playlist"><Playlist model={props.model}/></Show>
+                    <Show hash="#details"><Details model={props.model} /></Show>
+                </div>
+                <div class="sidebar"><Search model={props.model}/></div>
             </div>
         </div>
-           );
+        );
 }

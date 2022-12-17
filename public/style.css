@@ -1,3 +1,7 @@
+body{
+    margin: 0px;
+}
+
 .topnav {
     overflow: hidden;
     background-color: rgb(30, 215, 96);
@@ -32,10 +36,11 @@
     margin: 3px;
 }
 
+/* SEARCH RESULTS */
 .sidebar{
     flex: 0.2;
+    align-content: flex-end;
 }
-
 .searchResult{
     border-style: solid;
     border-radius: 8px;
@@ -49,45 +54,92 @@
     display: table;
     font-family: "Trebuchet MS", "sans-serif";
 }
-
+.searchInfo{
+    float: left;
+    width: 350px;
+    margin: 8px;
+    color:rgb(30, 215, 96);
+    content: "";
+    clear: both;
+    display: table;
+    font-family: "Trebuchet MS", "sans-serif";
+}
 .searchPic{
     border-radius: 8px;
     float: left;
     margin: 5px;
+    height: 100px;
 }
-
 .searchText{
     float: left;
     margin: 10px;
     color:rgb(30, 215, 96);
+    font-family: "Trebuchet MS", "sans-serif";
 }
-
-.rounded {
-    height: 40px;
+.inputBox{
+    height: 35px;
     border-radius: 8px;
     background-color:rgb(30, 215, 96);
     font-family: "Trebuchet MS", "sans-serif";
     font-weight: bold;
 }
-
 .button{
-    height: 40px;
+    height: 35px;
     border-radius: 8px;
     background-color:rgb(30, 215, 96);
     font-family: "Trebuchet MS", "sans-serif";
     font-weight: bold;
 }
-
+.addToPlaylistButton{
+    height: 35px;
+    border-radius: 8px;
+    background-color:rgb(30, 215, 96);
+    font-family: "Trebuchet MS", "sans-serif";
+    font-weight: bold;
+    float: right;
+}
 .button:hover{
     background-color: rgb(27, 167, 76);
     cursor: pointer;
 }
+.addToPlaylistButton:hover{
+    background-color: rgb(27, 167, 76);
+    cursor: pointer;
+}
 
+/* PLAYLIST */
+table, th, td{
+    border: 1px solid rgb(25, 20, 20);
+    border-spacing: 30px 0;
+    padding: 0 15px;
+    width: 150px;
+    text-align: center;
+}
+.grid {
+    margin-left: -60px; /* remove outer border spacing */
+    margin-right: -60px; /* remove outer border spacing */
+}
+.xButton{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    background-color:rgb(30, 215, 96);
+    color: rgb(25, 20, 20);
+    font-family: "Trebuchet MS", "sans-serif";
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+}
+.xButton:hover{
+    background-color: rgb(27, 167, 76);
+    cursor: pointer;
+}
+
+/* GENERAL */
 .hidden{
     display: none;
 }
-
-@media screen and (max-width: 950px){
+@media screen and (max-width: 1150px){
     .flexParent{
         flex-direction: column;
     }
