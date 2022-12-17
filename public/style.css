@@ -51,6 +51,11 @@ body{
     display: table;
     font-family: "Trebuchet MS", "sans-serif";
 }
+.detailsPic{
+    border-radius: 15px;
+    margin: 5px;
+    height: 300px;
+}
 
 /* SEARCH RESULTS */
 .sidebar{
@@ -125,7 +130,7 @@ body{
 
 /* PLAYLIST */
 table, th, td{
-    border: 1px solid rgb(25, 20, 20);
+    border: 0px solid rgb(25, 20, 20);
     border-spacing: 30px 0;
     padding: 0 15px;
     width: 150px;
@@ -134,6 +139,7 @@ table, th, td{
 .grid {
     margin-left: -60px; /* remove outer border spacing */
     margin-right: -60px; /* remove outer border spacing */
+    line-height: 1.6;
 }
 .xButton{
     height: 35px;
