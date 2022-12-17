@@ -5,37 +5,37 @@ export default
 function Details(props){
 
 
-    function firstSongInPlaylistCB(firstSong) { return firstSong.id === props.model.firstSong }
-    function secondSongInPlaylistCB(secondSong) { return secondSong.id === props.model.secondSong }
+    function leftSongInPlaylistCB(leftSong) { return leftSong.id === props.model.leftSong }
+    function rightSongInPlaylistCB(rightSong) { return rightSong.id === props.model.rightSong }
 
     function onAddToPlaylistACB() { 
-        firstSong?props.model.addToPlaylist(props.model.firstSongPromiseState.data):secondSong?props.model.addToPlaylist(props.model.secondSongPromiseState.data):""; }
+        leftSong?props.model.addToPlaylist(props.model.leftSongPromiseState.data):rightSong?props.model.addToPlaylist(props.model.rightSongPromiseState.data):""; }
 
-    return promiseNoData(props.model.firstSongPromiseState) && promiseNoData(props.model.secondSongPromiseState) ||
-                <DetailsView firstSongData={props.model.firstSongPromiseState.data}
-                            secondSongData={props.model.secondSongPromiseState.data}
-                            isFirstSongInPlaylist={props.model.songs?props.model.songs.filter(firstSongInPlaylistCB).length > 0?true:false:false}
-                            isSecondSongInPlaylist={props.model.songs?props.model.songs.filter(secondSongInPlaylistCB).length > 0?true:false:false}
+    return promiseNoData(props.model.leftSongPromiseState) && promiseNoData(props.model.rightSongPromiseState) ||
+                <DetailsView leftSongData={props.model.leftSongPromiseState.data}
+                            rightSongData={props.model.rightSongPromiseState.data}
+                            isLeftSongInPlaylist={props.model.songs?props.model.songs.filter(leftSongInPlaylistCB).length > 0?true:false:false}
+                            isRightSongInPlaylist={props.model.songs?props.model.songs.filter(rightSongInPlaylistCB).length > 0?true:false:false}
                             onAddToPlaylist={onAddToPlaylistACB}/>
 }
 
 /*
-    function firstSongDetails(props){
-        function firstSongInPlaylistCB(firstSong){ return firstSong.id === props.model.firstSong }
+    function leftSongDetails(props){
+        function leftSongInPlaylistCB(leftSong){ return leftSong.id === props.model.leftSong }
         function onAddToPlaylistACB(){ 
-            props.model.addToPlaylist(props.model.firstSongPromiseState.data); }
-        return promiseNoData(props.model.firstSongPromiseState) || 
-                <DetailsView firstSongData={props.model.firstSongPromiseState.data}
-                            isfirstSongInPlaylist={props.model.songs?props.model.songs.filter(firstSongInPlaylistCB).length > 0?true:false:false}
+            props.model.addToPlaylist(props.model.leftSongPromiseState.data); }
+        return promiseNoData(props.model.leftSongPromiseState) || 
+                <DetailsView leftSongData={props.model.leftSongPromiseState.data}
+                            isleftSongInPlaylist={props.model.songs?props.model.songs.filter(leftSongInPlaylistCB).length > 0?true:false:false}
                             onAddToPlaylist={onAddToPlaylistACB}/>
         }
-    function secondSongDetails(props){
-        function secondSongInPlaylistCB(secondSong){ return secondSong.id === props.model.secondSong }
+    function rightSongDetails(props){
+        function rightSongInPlaylistCB(rightSong){ return rightSong.id === props.model.rightSong }
         function onAddToPlaylistACB(){ 
-            props.model.addToPlaylist(props.model.secondSongPromiseState.data); }
-        return promiseNoData(props.model.secondSongPromiseState) || 
-                <DetailsView secondSongData={props.model.secondSongPromiseState.data}
-                            isSecondSongInPlaylist={props.model.songs?props.model.songs.filter(secondSongInPlaylistCB).length > 0?true:false:false}
+            props.model.addToPlaylist(props.model.rightSongPromiseState.data); }
+        return promiseNoData(props.model.rightSongPromiseState) || 
+                <DetailsView rightSongData={props.model.rightSongPromiseState.data}
+                            isRightSongInPlaylist={props.model.songs?props.model.songs.filter(rightSongInPlaylistCB).length > 0?true:false:false}
                             onAddToPlaylist={onAddToPlaylistACB}/>
         }
 };

@@ -5,12 +5,12 @@ class SpotifyModel{
     constructor(songArray=[]){
         this.observers = [];
         this.songs= songArray;
-        this.firstSong = null;
-        this.secondSong = null;
+        this.leftSong = null;
+        this.rightSong = null;
         this.searchResultsPromiseState= {};
         this.searchParams= {};
-        this.firstSongPromiseState= {};
-        this.secondSongPromiseState= {};
+        this.leftSongPromiseState= {};
+        this.rightSongPromiseState= {};
     }
 
     addToPlaylist(songToAdd){
@@ -33,22 +33,22 @@ class SpotifyModel{
         }
     }
 
-    setFirstSong(id){
+    setLeftSong(id){
         function notifyACB(){ this.notifyObservers(); }
         if (id === undefined){ return; }
-        if (this.firstSong === id){ return; }
-        this.firstSong = id
+        if (this.leftSong === id){ return; }
+        this.leftSong = id
         this.notifyObservers({songID: id});
-        resolvePromise(getSongDetails(id), this.firstSongPromiseState, notifyACB.bind(this));
+        resolvePromise(getSongDetails(id), this.leftSongPromiseState, notifyACB.bind(this));
     }
 
-    setSecondSong(id){
+    setRightSong(id){
         function notifyACB(){ this.notifyObservers(); }
         if (id === undefined){ return; }
-        if (this.secondSong === id){ return; }
-        this.secondSong = id
+        if (this.rightSong === id){ return; }
+        this.rightSong = id
         this.notifyObservers({songID: id});
-        resolvePromise(getSongDetails(id), this.secondSongPromiseState, notifyACB.bind(this));
+        resolvePromise(getSongDetails(id), this.rightSongPromiseState, notifyACB.bind(this));
     }
 
     setSearchQuery(q){

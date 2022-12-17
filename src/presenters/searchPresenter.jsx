@@ -16,8 +16,8 @@ const Search={
         function onSearchTypeACB(choice){ this.searchType = choice; }
         function onSearchACB(){ resolvePromise(searchSpotify({query: this.searchQuery, type: this.searchType}), this.searchResultsPromiseState) }
         function onAddToPlaylistACB(song){ this.model.addToPlaylist(song) }
-        //function onSearchResultACB(result){ this.model.setFirstSong(result.id); }
-        //function onSearchResultACB(result){ this.model.setSecondSong(result.id); }
+        //function onSearchResultACB(result){ this.model.setLeftSong(result.id); }
+        //function onSearchResultACB(result){ this.model.setRightSong(result.id); }
         return (
             <div>
                 <SearchFormView spotifyTypeOptions={["artists", "tracks"]}

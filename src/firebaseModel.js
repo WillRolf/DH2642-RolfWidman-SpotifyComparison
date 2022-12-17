@@ -33,11 +33,11 @@ function updateFirebaseFromModel(model) {
     function observePayloadACB(payload) {
         if (!payload || payload<0 ) { return; }
         
-        else if(payload.firstSong){
-            firebase.database().ref("/firstSong").set(model.firstSong)
+        else if(payload.leftSong){
+            firebase.database().ref("/leftSong").set(model.leftSong)
         }
-        else if(payload.secondSong){
-            firebase.database().ref("/secondSong").set(model.secondSong)
+        else if(payload.rightSong){
+            firebase.database().ref("/rightSong").set(model.rightSong)
         }
         else if (payload.addToPlaylist) {
             firebase.database().ref(Dbase +"/songs/"+ payload.addToPlaylist.id).set(payload.addToPlaylist.name)
@@ -52,11 +52,11 @@ function updateFirebaseFromModel(model) {
 console.log(updateFirebaseFromModel)
 
 function updateModelFromFirebase(model) {
-    function songChangedInFirebaseACB(firebaseData){ model.setFirstSong(firebaseData.val());}
-    firebase.database().ref("/firstSong").on("value", songChangedInFirebaseACB);
+    function songChangedInFirebaseACB(firebaseData){ model.setLeftSong(firebaseData.val());}
+    firebase.database().ref("/leftSong").on("value", songChangedInFirebaseACB);
 
-    function songChangedInFirebaseACB(firebaseData){ model.setSecondSong(firebaseData.val());}
-    firebase.database().ref("/secondSong").on("value", songChangedInFirebaseACB);
+    function songChangedInFirebaseACB(firebaseData){ model.setRightSong(firebaseData.val());}
+    firebase.database().ref("/rightSong").on("value", songChangedInFirebaseACB);
 
     function songAddedInFirebaseACB(firebaseData){
         function responseSongDataACB(song) {

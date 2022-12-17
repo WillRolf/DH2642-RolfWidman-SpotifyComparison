@@ -5,7 +5,7 @@ import Show from "../presenters/show.jsx"
 
 export default
 function App(props){
-    function changeToHomeACB(){window.location.hash="#search"}
+    function changeToHomeACB(){window.location.hash="#home"}
     function changeToPlaylistACB(){window.location.hash="#playlist"}
     return (<div>
                 <div class="topnav">
@@ -15,7 +15,7 @@ function App(props){
             <div class="flexParent">
                 <div class="mainContent">
                     <Show hash="#playlist"><Playlist model={props.model}/></Show>
-                    <Show hash="#details"><Details model={props.model} /></Show>
+                    <Show hash="#home"><Details model={props.model} /></Show>
                 </div>
                 <div class="sidebar"><Search model={props.model}/></div>
             </div>
