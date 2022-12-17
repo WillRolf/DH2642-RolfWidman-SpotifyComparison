@@ -11,11 +11,11 @@ function Details(props){
                 <DetailsView leftData={props.model.leftPromiseState.data?
                                         props.model.leftPromiseState.data.artists?
                                         props.model.leftPromiseState.data.artists[0]:
-                                        props.model.leftPromiseState.data.tracks[0]:null}
+                                        props.model.leftPromiseState.data.tracks[0]:undefined}
                             rightData={props.model.rightPromiseState.data?
                                         props.model.rightPromiseState.data.artists?
                                         props.model.rightPromiseState.data.artists[0]:
-                                        props.model.rightPromiseState.data.tracks[0]:null}
+                                        props.model.rightPromiseState.data.tracks[0]:undefined}
                             isLeftSongInPlaylist={props.model.songs?props.model.songs.filter(leftSongInPlaylistCB).length > 0?true:false:false}
                             isRightSongInPlaylist={props.model.songs?props.model.songs.filter(rightSongInPlaylistCB).length > 0?true:false:false}
                             onAddToPlaylist={onAddToPlaylistACB}/>

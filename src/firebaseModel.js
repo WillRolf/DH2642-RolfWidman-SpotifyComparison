@@ -1,5 +1,5 @@
 import SpotifyModel from "./SpotifyModel.js";
-import { getSongDetails } from "./SpotifySource.js";
+import { getDetails } from "./SpotifySource.js";
 import firebaseConfig from "./firebaseConfig.js";
 import firebase from "firebase/app";
 import "firebase/database";
@@ -24,7 +24,7 @@ function firebaseModelPromise() {
         return Promise.all(songPromiseArray).then(createModelACB);
     }
     function makeSongPromiseCB(songId){
-        return getSongDetails(songId);
+        return getDetails(songId);
     }
     return firebase.database().ref().once("value").then(makeBigPromiseACB);
 }
@@ -69,7 +69,7 @@ function updateModelFromFirebase(model) {
             return model.songs.find(checkSongDuplicateCB);    
         }
         if (!fetchSongDataBasedOnID(+firebaseData.key)) {
-            getSongDetails(+firebaseData.key).then(responseSongDataACB);
+            getDetails(+firebaseData.key).then(responseSongDataACB);
         }
     }
     firebase.database().ref("/songs").on("child_added", songAddedInFirebaseACB);

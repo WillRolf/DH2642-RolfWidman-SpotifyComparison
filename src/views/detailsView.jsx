@@ -2,10 +2,26 @@ function DetailsView(props){
     console.log(props.leftData)
     function addToPlaylistClickACB(){ props.onAddToPlaylist(props.songData); }
     function cancelClickACB(){  }
+
+    function displayIconCB(side){
+        if (side === "left"){ 
+            return props.leftData?
+            <td><img src={props.leftData.album?props.leftData.album.images[1].url:props.leftData.images[1].url}></img></td>:
+            <td></td>
+        }
+    }
+    function displayRightIconCB(){
+        return <td><img src={props.rightData.album?props.rightData.album.images[1].url:props.rightData.images[1].url}></img></td>
+    }
+
     return (<div class="grid"><table style="width:100%">
         <tr>
-            <th></th>
-
+            {displayIconCB("left")}
+            {props.rightData?displayRightIconCB():<td></td>}
+        </tr>
+        <tr>
+            <td>NAME</td>
+            <td>NAME</td>
         </tr>
         </table></div>
     );
