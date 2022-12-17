@@ -39,14 +39,12 @@ function updateFirebaseFromModel(model) {
         else if(payload.secondSong){
             firebase.database().ref("/secondSong").set(model.secondSong)
         }
-        /*
         else if (payload.addToPlaylist) {
             firebase.database().ref(Dbase +"/songs/"+ payload.addToPlaylist.id).set(payload.addToPlaylist.name)
         }
         else if (payload.removeFromPlaylist) {
             firebase.database().ref(Dbase +"/songs/"+ payload.removeFromPlaylist.id).set(null)
         }    
-        */
     }
     model.addObserver(observePayloadACB)
     return;
