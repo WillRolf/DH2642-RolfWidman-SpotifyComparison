@@ -18,6 +18,7 @@ const Search={
         function onAddToPlaylistACB(song){ this.model.addToPlaylist(song) }
         function onSetLeftInfoACB(result){ this.model.setLeftSong(result); }
         function onSetRightInfoACB(result){ this.model.setRightSong(result); }
+        function songInPlaylistCB(song){ return this.model.songs?this.model.songs.filter(s => s === song).length>0?true:false:false}
         return (
             <div>
                 <SearchFormView spotifyTypeOptions={["artists", "tracks"]}
@@ -28,7 +29,8 @@ const Search={
                 <SearchResultsView searchResults={this.searchResultsPromiseState.data}
                                 onPlaylistButtonPress={onAddToPlaylistACB.bind(this)}
                                 onLeftButtonPress={onSetLeftInfoACB.bind(this)}
-                                onRightButtonPress={onSetRightInfoACB.bind(this)}/>}
+                                onRightButtonPress={onSetRightInfoACB.bind(this)}
+                                isSongInPlaylist={songInPlaylistCB.bind(this)}/>}
             </div>
         )
     }

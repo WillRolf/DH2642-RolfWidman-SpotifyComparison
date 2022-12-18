@@ -65,8 +65,15 @@ body{
 
 /* SEARCH RESULTS */
 .sidebar{
-    flex: 0.2;
+    flex: 0.21;
     align-content: flex-end;
+    height: 100vh;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.sidebar::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
 }
 .searchResult{
     border-style: solid;

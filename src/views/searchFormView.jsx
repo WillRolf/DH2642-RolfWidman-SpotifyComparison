@@ -14,7 +14,7 @@ function SearchFormView(props){
     }
     function onButtonPressACB(){
         props.onButtonPress();
-      }
+    }
     return (
     <div>
         <input

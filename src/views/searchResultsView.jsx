@@ -20,7 +20,8 @@ function SearchResultsView(props){
         function getAddToPlaylistButtonCB(){
             return result.data.name?
             (<button class="addToPlaylistButton"
-            onClick={onPlaylistButtonPressACB}>
+            onClick={onPlaylistButtonPressACB}
+            disabled={props.isSongInPlaylist(result)}>
                 Add To Playlist
             </button>):
             (<div></div>)
