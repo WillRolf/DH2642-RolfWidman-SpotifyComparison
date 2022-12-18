@@ -56,6 +56,12 @@ body{
     margin: 5px;
     height: 300px;
 }
+.clickURL{
+    color:rgb(30, 215, 96);
+}
+.clickURL:hover{
+    color:rgb(27, 167, 76);
+}
 
 /* SEARCH RESULTS */
 .sidebar{

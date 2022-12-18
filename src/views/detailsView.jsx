@@ -1,7 +1,5 @@
 function DetailsView(props){
-    console.log(props.leftData)
-    function addToPlaylistClickACB(){ props.onAddToPlaylist(props.songData); }
-    function cancelClickACB(){  }
+    function onPlaylistButtonPressACB(data){ props.onPlaylistButtonPress(data) }
     function displayIconCB(side){
         if (side === "left"){ 
             return props.leftData?
@@ -14,6 +12,28 @@ function DetailsView(props){
                 <td><img class="detailsPic" src={props.rightData.album?
                     props.rightData.album.images[1].url:
                     props.rightData.images[1].url}></img></td>:<td></td>
+        }
+    }
+    function displayFollowersOrDurationCB(side){
+        function getDurationCB(data){ 
+            var minutes = Math.floor(parseInt(data.duration_ms) / 60000);
+            var seconds = ((parseInt(data.duration_ms) % 60000) / 1000).toFixed(0);
+            return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+        }
+        function splitNumbers(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); //found on https://stackoverflow.com/questions/2901102/how-to-format-a-number-with-commas-as-thousands-separators
+        }
+        if (side === "left"){ 
+            return props.leftData?
+            <td>{props.leftData.album?
+                (<div>Duration:<br></br>{getDurationCB(props.leftData)}</div>):
+                (<div>Followers:<br></br>{splitNumbers(props.leftData.followers.total)}</div>)}</td>:<td></td>
+        }
+        if (side === "right"){ 
+            return props.rightData?
+            <td>{props.rightData.album?
+                (<div>Duration:<br></br>{getDurationCB(props.rightData)}</div>):
+                (<div>Followers:<br></br>{splitNumbers(props.rightData.followers.total)}</div>)}</td>:<td></td>
         }
     }
     function displayAlbumOrGenreCB(side){
@@ -44,16 +64,24 @@ function DetailsView(props){
             <td style="font-size:25px">{props.rightData?props.rightData.name:""}</td>
         </tr>
         <tr height="100">
-            <td>Type:<br></br>{props.leftData?props.leftData.type:""}</td>
-            <td>Type:<br></br>{props.rightData?props.rightData.type:""}</td>
+            <td>{props.leftData?<div>Type:<br></br>{props.leftData.type}</div>:""}</td>
+            <td>{props.rightData?<div>Type:<br></br>{props.rightData.type}</div>:""}</td>
         </tr>
         <tr height="100">
-            <td>Popularity (Out of 100):<br></br>{props.leftData?props.leftData.popularity:""}</td>
-            <td>Popularity (Out of 100):<br></br>{props.rightData?props.rightData.popularity:""}</td>
+            {displayFollowersOrDurationCB("left")}
+            {displayFollowersOrDurationCB("right")}
+        </tr>
+        <tr height="100">
+            <td>{props.leftData?<div>Popularity (Out of 100):<br></br>{props.leftData.popularity}</div>:""}</td>
+            <td>{props.rightData?<div>Popularity (Out of 100):<br></br>{props.rightData.popularity}</div>:""}</td>
         </tr>
         <tr height="100">
             {displayAlbumOrGenreCB("left")}
             {displayAlbumOrGenreCB("right")}
+        </tr>
+        <tr height="100">
+            <td>{props.leftData?<a href={props.leftData.external_urls.spotify} class="clickURL">Spotify URL</a>:""}</td>
+            <td>{props.rightData?<a href={props.rightData.external_urls.spotify} class="clickURL">Spotify URL</a>:""}</td>
         </tr>
         </table></div>
     );
