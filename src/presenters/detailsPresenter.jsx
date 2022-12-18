@@ -20,25 +20,3 @@ function Details(props){
                             isRightSongInPlaylist={props.model.songs?props.model.songs.filter(rightSongInPlaylistCB).length > 0?true:false:false}
                             onAddToPlaylist={onAddToPlaylistACB}/>
 }
-
-/*
-    function leftSongDetails(props){
-        function leftSongInPlaylistCB(leftCompare){ return leftCompare.id === props.model.leftCompare }
-        function onAddToPlaylistACB(){ 
-            props.model.addToPlaylist(props.model.leftPromiseState.data); }
-        return promiseNoData(props.model.leftPromiseState) || 
-                <DetailsView leftSongData={props.model.leftPromiseState.data}
-                            isleftSongInPlaylist={props.model.songs?props.model.songs.filter(leftSongInPlaylistCB).length > 0?true:false:false}
-                            onAddToPlaylist={onAddToPlaylistACB}/>
-        }
-    function rightSongDetails(props){
-        function rightSongInPlaylistCB(rightCompare){ return rightCompare.id === props.model.rightCompare }
-        function onAddToPlaylistACB(){ 
-            props.model.addToPlaylist(props.model.rightPromiseState.data); }
-        return promiseNoData(props.model.rightPromiseState) || 
-                <DetailsView rightSongData={props.model.rightPromiseState.data}
-                            isRightSongInPlaylist={props.model.songs?props.model.songs.filter(rightSongInPlaylistCB).length > 0?true:false:false}
-                            onAddToPlaylist={onAddToPlaylistACB}/>
-        }
-};
-*/
