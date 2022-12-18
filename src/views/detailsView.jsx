@@ -1,5 +1,4 @@
 function DetailsView(props){
-    function onPlaylistButtonPressACB(data){ props.onPlaylistButtonPress(data) }
     function displayIconCB(side){
         if (side === "left"){ 
             return props.leftData?
