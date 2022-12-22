@@ -10,7 +10,7 @@ const Search={
     data(){ return { searchQuery: "" ,
                     searchType: "",
                 searchResultsPromiseState: {promise: "", data: "", error: ""} } },
-    created(){ if (!this.searchResultsPromiseState.promise) {resolvePromise(searchSpotify({}), this.searchResultsPromiseState)}; },
+    created(){ if (!this.searchResultsPromiseState.promise) {resolvePromise(searchSpotify({query:"", type:""}), this.searchResultsPromiseState)}; },
     render(){
         function onSearchQueryACB(text){ this.searchQuery = text; }
         function onSearchTypeACB(choice){ this.searchType = choice; }

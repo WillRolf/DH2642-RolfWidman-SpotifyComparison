@@ -3,15 +3,44 @@ import { getDetails } from "./SpotifySource.js";
 import firebaseConfig from "./firebaseConfig.js";
 import firebase from "firebase/app";
 import "firebase/database";
+import "firebase/auth"
 
 // Initialise firebase
 firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const database = firebase.database();
 
 function observerRecap(model) {
     function checkPayload(payload) {
         console.log(payload)
     }
     model.addObserver(checkPayload)
+}
+
+function register(user){
+    function validateEmailCB(){ return (/^[^@]+@\w+(\.\w+)+\w$/.test(user.email)) } //found on https://masteringjs.io/tutorials/fundamentals/email-validation
+    function createUserCB(){ 
+        var u = auth.currentUser;
+        var user_data = {
+            email: user.email,
+            playlist: model.songs
+        }
+        database().ref().child('users/' + u.uid).set(user_data);
+    }
+    if (!validateEmailCB){ return "Invalid Email" }
+    auth.createUserWithEmailAndPassword(user.email, user.password).then(createUserCB).catch(function(error){alert(error.message)});
+}
+
+function login(user){
+    function loginUserCB(){
+        var u = auth.currentUser;
+        var user_data = {
+            playlist: model.songs
+        }
+        database().ref().child('users/' + u.uid).update(user_data);
+    }
+    auth.signInWithEmailAndPassword(user.email, user.password).then(loginUserCB).catch(function(error){alert(error.message)})
 }
 
 function firebaseModelPromise() {
@@ -78,4 +107,4 @@ function updateModelFromFirebase(model) {
     firebase.database().ref("/songs").on("child_removed",  songRemovedInFirebaseACB);
     return;
 }
-export {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase};
+export {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase, register, login};
