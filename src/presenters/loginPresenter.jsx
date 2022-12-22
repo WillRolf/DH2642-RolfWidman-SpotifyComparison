@@ -4,12 +4,13 @@ import RegisterView from "../views/registerView.jsx"
 import "../firebaseModel.js"
 
 const Login={
+    props: ["model"],
     data(){ return {
         email:"",
         password:""}},
     render(){ 
-        function loginUserACB(){ login({email: this.email, password: this.password}) }
-        function registerUserACB(){ register({email: this.email, password: this.password}) }
+        function loginUserACB(){ login({email: this.email, password: this.password, playlist: this.model.songs}) }
+        function registerUserACB(){ register({email: this.email, password: this.password, playlist: this.model.songs}) }
         function emailChangeACB(e){ this.email = e }
         function passwordChangeACB(p){ this.password = p }
         return(<div>

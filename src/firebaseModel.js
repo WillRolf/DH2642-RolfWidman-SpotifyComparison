@@ -24,7 +24,7 @@ function register(user){
         var u = auth.currentUser;
         var user_data = {
             email: user.email,
-            playlist: model.songs
+            playlist: user.playlist
         }
         database().ref().child('users/' + u.uid).set(user_data);
     }
@@ -36,7 +36,7 @@ function login(user){
     function loginUserCB(){
         var u = auth.currentUser;
         var user_data = {
-            playlist: model.songs
+            playlist: user.playlist
         }
         database().ref().child('users/' + u.uid).update(user_data);
     }
