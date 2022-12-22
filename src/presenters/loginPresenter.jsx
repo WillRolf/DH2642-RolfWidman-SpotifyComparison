@@ -1,9 +1,9 @@
 import { login, register } from "../firebaseModel.js";
 import LoginView from "../views/loginView.jsx";
 import RegisterView from "../views/registerView.jsx"
+import "../firebaseModel.js"
 
 const Login={
-    props: ["model"],
     data(){ return {
         email:"",
         password:""}},
