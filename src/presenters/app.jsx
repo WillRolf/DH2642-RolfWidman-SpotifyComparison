@@ -3,12 +3,14 @@ import Search from "../presenters/searchPresenter.jsx"
 import Playlist from "../presenters/playlistPresenter.jsx"
 import Login from "../presenters/loginPresenter.jsx"
 import Show from "../presenters/show.jsx"
+import { logout } from "../firebaseModel.js"
 
 export default
 function App(props){
     function changeToHomeACB(){window.location.hash="#home"}
     function changeToPlaylistACB(){window.location.hash="#playlist"}
-    function changeToLoginACB(){window.location.hash="#login"}
+    function changeToLoginACB(){ logout();
+        window.location.hash="#login"}
     function renderNavBarACB(){ 
         return(
             <div class="topnav">

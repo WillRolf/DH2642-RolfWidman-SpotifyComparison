@@ -47,6 +47,10 @@ function login(user){
     window.location.hash="#home"
 }
 
+function logout(){
+    auth.signOut();
+}
+
 function firebaseModelPromise() {
     function makeBigPromiseACB(firebaseData) {
         if (!firebaseData.val() || Object.keys(firebaseData.val()).length === 0) { return new SpotifyModel(); }
@@ -111,4 +115,4 @@ function updateModelFromFirebase(model) {
     firebase.database().ref("/songs").on("child_removed",  songRemovedInFirebaseACB);
     return;
 }
-export {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase, register, login};
+export {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase, register, login, logout};
