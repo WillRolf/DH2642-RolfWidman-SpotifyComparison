@@ -1,0 +1,1 @@
+if (window.location.hash !== "#playlist" || "#home"){ window.location.hash = "#login" }

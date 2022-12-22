@@ -13,7 +13,7 @@ const Show = {
     render(){
         console.log("hashstate:"+this.hashState);
         console.log("hash:"+this.hash);
-        if (window.location.hash !== "#playlist" || "#home"){ window.location.hash = "#login" }
+        //if (window.location.hash !== "#playlist" || "#home"){ window.location.hash = "#login" }
         return <span 
         class={this.hashState === this.hash? "mainContent": "hidden"}>
             {this.$slots.default()}</span>;

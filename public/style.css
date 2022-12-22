@@ -53,7 +53,7 @@ body{
 
 /* DETAILS */
 .details{
-    flex: 0.4;
+    flex: 0.79;
     border-style: solid;
     border-radius: 8px;
     border-color: rgb(30, 215, 96);

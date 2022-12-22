@@ -10,31 +10,25 @@ function App(props){
     function changeToPlaylistACB(){window.location.hash="#playlist"}
     function changeToLoginACB(){window.location.hash="#login"}
     function renderNavBarACB(){ 
-        if (window.location.hash !== "#login"){
-            return(
-                <div class="topnav">
-                        <a onClick={changeToHomeACB}>Home</a>
-                        <a onClick={changeToPlaylistACB}>Playlist</a>
-                </div>
-            );
-        }
-    }
-    function renderSidebarACB(){
-        if (window.location.hash !== "#login"){
-            return(
-                <div class="sidebar"><Search model={props.model}/></div>
-            );
-        }
+        return(
+            <div class="topnav">
+                    <a onClick={changeToHomeACB}>Home</a>
+                    <a onClick={changeToPlaylistACB}>Playlist</a>
+                    <a onClick={changeToLoginACB}>Logout</a>
+            </div>
+        );
     }
     return (<div>
+                <Show hash="#playlist">{renderNavBarACB()}</Show>
+                <Show hash="#home">{renderNavBarACB()}</Show>
                 <Show hash="#login"><Login model={props.model}/></Show>
-                {renderNavBarACB()}
             <div class="flexParent">
                 <div class="mainContent">
                     <Show hash="#playlist"><Playlist model={props.model}/></Show>
                     <Show hash="#home"><div class="details"><Details model={props.model}/></div></Show>
                 </div>
-                {renderSidebarACB()}
+                <Show hash="#playlist"><div class="sidebar"><Search model={props.model}/></div></Show>
+                <Show hash="#home"><div class="sidebar"><Search model={props.model}/></div></Show>
             </div>
         </div>
     );

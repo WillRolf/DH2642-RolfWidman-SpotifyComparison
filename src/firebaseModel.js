@@ -20,6 +20,7 @@ function observerRecap(model) {
 
 function register(user){
     function validateEmailCB(){ return (/^[^@]+@\w+(\.\w+)+\w$/.test(user.email)) } //found on https://masteringjs.io/tutorials/fundamentals/email-validation
+    function validatePasswordCB(){ return user.password > 6 }
     function createUserCB(){ 
         var u = auth.currentUser;
         var user_data = {
@@ -28,7 +29,8 @@ function register(user){
         }
         database.ref().child('users/' + u.uid).set(user_data);
     }
-    if (!validateEmailCB){ alert("Invalid Email") }
+    if (!validateEmailCB){ return "Invalid Email" }
+    if (!validatePasswordCB){ return "Password too short! Need at least 6 characters!" }
     auth.createUserWithEmailAndPassword(user.email, user.password).then(createUserCB).catch(function(error){console.log(error)});
     window.location.hash="#home"
 }
