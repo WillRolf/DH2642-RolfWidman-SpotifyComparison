@@ -26,7 +26,7 @@ function register(user){
             email: user.email,
             playlist: user.playlist
         }
-        database().ref().child('users/' + u.uid).set(user_data);
+        database.ref().child('users/' + u.uid).set(user_data);
     }
     if (!validateEmailCB){ return "Invalid Email" }
     auth.createUserWithEmailAndPassword(user.email, user.password).then(createUserCB).catch(function(error){console.log(error)});
@@ -38,7 +38,7 @@ function login(user){
         var user_data = {
             playlist: user.playlist
         }
-        database().ref().child('users/' + u.uid).update(user_data);
+        database.ref().child('users/' + u.uid).update(user_data);
     }
     auth.signInWithEmailAndPassword(user.email, user.password).then(loginUserCB).catch(function(error){console.log(error)})
 }
