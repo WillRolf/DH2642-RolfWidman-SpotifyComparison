@@ -7,7 +7,8 @@ const Login={
     props: ["model"],
     data(){ return {
         email:"",
-        password:""}},
+        password:"",
+        playlist:""}},
     render(){ 
         function loginUserACB(){ login({email: this.email, password: this.password, playlist: this.model.songs}) }
         function registerUserACB(){ register({email: this.email, password: this.password, playlist: this.model.songs}) }
