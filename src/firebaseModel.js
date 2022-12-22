@@ -28,8 +28,9 @@ function register(user){
         }
         database.ref().child('users/' + u.uid).set(user_data);
     }
-    if (!validateEmailCB){ return "Invalid Email" }
+    if (!validateEmailCB){ alert("Invalid Email") }
     auth.createUserWithEmailAndPassword(user.email, user.password).then(createUserCB).catch(function(error){console.log(error)});
+    window.location.hash="#home"
 }
 
 function login(user){
@@ -41,6 +42,7 @@ function login(user){
         database.ref().child('users/' + u.uid).update(user_data);
     }
     auth.signInWithEmailAndPassword(user.email, user.password).then(loginUserCB).catch(function(error){console.log(error)})
+    window.location.hash="#home"
 }
 
 function firebaseModelPromise() {
