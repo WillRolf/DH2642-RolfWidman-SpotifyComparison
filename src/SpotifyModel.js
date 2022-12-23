@@ -37,12 +37,12 @@ class SpotifyModel{
         function notifyACB(){ this.notifyObservers(); }
         if (!result){ return; }
 
-        if (!result.data.name){
-            var id = String(result.data.uri).replace("spotify:artist:","");
+        if (!result.name){
+            var id = String(result.uri).replace("spotify:artist:","");
             var path = "artists";
         }
         else{ 
-            var id = result.data.id;
+            var id = result.id;
             var path = "tracks";
         }
 
@@ -56,12 +56,12 @@ class SpotifyModel{
         function notifyACB(){ this.notifyObservers(); }
         if (!result){ return; }
         
-        if (!result.data.name){
-            var id = String(result.data.uri).replace("spotify:artist:","");
+        if (!result.name){
+            var id = String(result.uri).replace("spotify:artist:","");
             var path = "artists";
         }
         else{ 
-            var id = result.data.id;
+            var id = result.id;
             var path = "tracks";
         }
 
