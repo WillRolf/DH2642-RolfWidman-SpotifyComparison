@@ -1,4 +1,4 @@
-import {searchSpotify, getDetails} from "../src/spotifySource.js";
+import {searchSpotify, getTrackDetails, getArtistDetails} from "../src/spotifySource.js";
 import resolvePromise from "../src/resolvePromise.js";
 
 class SpotifyModel{
@@ -39,17 +39,18 @@ class SpotifyModel{
 
         if (!result.name){
             var id = String(result.uri).replace("spotify:artist:","");
-            var path = "artists";
+            if (this.leftCompare === id){ return; }
+            this.leftCompare = id
+            this.notifyObservers({songID: id});
+            resolvePromise(getArtistDetails(id), this.leftPromiseState, notifyACB.bind(this));
         }
         else{ 
             var id = result.id;
-            var path = "tracks";
+            if (this.leftCompare === id){ return; }
+            this.leftCompare = id
+            this.notifyObservers({songID: id});
+            resolvePromise(getTrackDetails(id), this.leftPromiseState, notifyACB.bind(this));
         }
-
-        if (this.leftCompare === id){ return; }
-        this.leftCompare = id
-        this.notifyObservers({songID: id});
-        resolvePromise(getDetails(id, path), this.leftPromiseState, notifyACB.bind(this));
     }
 
     setRightSong(result){
@@ -58,17 +59,18 @@ class SpotifyModel{
         
         if (!result.name){
             var id = String(result.uri).replace("spotify:artist:","");
-            var path = "artists";
+            if (this.rightCompare === id){ return; }
+            this.rightCompare = id
+            this.notifyObservers({songID: id});
+            resolvePromise(getArtistDetails(id), this.rightPromiseState, notifyACB.bind(this));
         }
         else{ 
             var id = result.id;
-            var path = "tracks";
+            if (this.rightCompare === id){ return; }
+            this.rightCompare = id
+            this.notifyObservers({songID: id});
+            resolvePromise(getTrackDetails(id), this.rightPromiseState, notifyACB.bind(this));
         }
-
-        if (this.rightCompare === id){ return; }
-        this.rightCompare = id
-        this.notifyObservers({songID: id});
-        resolvePromise(getDetails(id, path), this.rightPromiseState, notifyACB.bind(this));
     }
 
     setSearchQuery(q){
