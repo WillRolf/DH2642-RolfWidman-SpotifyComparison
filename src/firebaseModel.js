@@ -1,4 +1,4 @@
-import SpotifyModel from "./SpotifyModel.js";
+import spotifyModel from "./SpotifyModel.js";
 import { getDetails } from "./SpotifySource.js";
 import firebaseConfig from "./firebaseConfig.js";
 import firebase from "firebase/app";
@@ -10,6 +10,9 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const database = firebase.database();
+spotifyModel.addObserver(observePayloadACB)
+console.log("firebase initialized")
+
 
 function observerRecap(model) {
     function checkPayload(payload) {
@@ -53,10 +56,10 @@ function logout(){
 
 function firebaseModelPromise() {
     function makeBigPromiseACB(firebaseData) {
-        if (!firebaseData.val() || Object.keys(firebaseData.val()).length === 0) { return new SpotifyModel(); }
+        if (!firebaseData.val() || Object.keys(firebaseData.val()).length === 0) { return spotifyModel; }
         const songPromiseArray= Object.keys(firebaseData.val().songs || []).map(makeSongPromiseCB);
         function createModelACB(songArray){
-            return new SpotifyModel(songArray);
+            return spotifyModel;
         }
         return Promise.all(songPromiseArray).then(createModelACB);
     }
@@ -66,23 +69,27 @@ function firebaseModelPromise() {
     return firebase.database().ref().once("value").then(makeBigPromiseACB);
 }
 
-function updateFirebaseFromModel(model) {
-    function observePayloadACB(payload) {
-        if (!payload || payload<0 ) { return; }
-        
-        else if(payload.leftCompare){
-            firebase.database().ref("/leftCompare").set(model.leftCompare)
-        }
-        else if(payload.rightCompare){
-            firebase.database().ref("/rightCompare").set(model.rightCompare)
-        }
-        else if (payload.addToPlaylist) {
-            firebase.database().ref("/songs/"+ payload.addToPlaylist.id).set(payload.addToPlaylist.name)
-        }
-        else if (payload.removeFromPlaylist) {
-            firebase.database().ref("/songs/"+ payload.removeFromPlaylist.id).set(null)
-        }    
+function observePayloadACB(payload) {
+    console.log(payload)
+    if (!payload || payload<0 ) { return; }
+    
+    else if(payload.leftCompare){
+        firebase.database().ref("/leftCompare").set(model.leftCompare)
     }
+    else if(payload.rightCompare){
+        firebase.database().ref("/rightCompare").set(model.rightCompare)
+    }
+    else if (payload.addSong) {
+        console.log("going to add song to firebase")
+        firebase.database().ref("/songs/"+ payload.addSong.id).set(payload.addSong.name)
+    }
+    else if (payload.removeFromPlaylist) {
+        firebase.database().ref("/songs/"+ payload.removeFromPlaylist.id).set(null)
+    }    
+}
+
+function updateFirebaseFromModel(model) {
+    
     model.addObserver(observePayloadACB)
     return;
 }
@@ -96,6 +103,7 @@ function updateModelFromFirebase(model) {
     firebase.database().ref("/rightCompare").on("value", songChangedInFirebaseACB);
 
     function songAddedInFirebaseACB(firebaseData){
+        console.log(firebaseData)
         function responseSongDataACB(song) {
             model.addToPlaylist(song);
         }
@@ -105,13 +113,13 @@ function updateModelFromFirebase(model) {
             }
             return model.songs.find(checkSongDuplicateCB);    
         }
-        if (!fetchSongDataBasedOnID(+firebaseData.key)) {
-            getDetails(+firebaseData.key).then(responseSongDataACB);
+        if (!fetchSongDataBasedOnID(firebaseData.key)) {
+            getDetails(firebaseData.key, "tracks").then(responseSongDataACB);
         }
     }
     firebase.database().ref("/songs").on("child_added", songAddedInFirebaseACB);
 
-    function songRemovedInFirebaseACB(firebaseData){ model.removeFromMenu({ id: +firebaseData.key });}
+    function songRemovedInFirebaseACB(firebaseData){ model.removeFromMenu({ id: firebaseData.key });}
     firebase.database().ref("/songs").on("child_removed",  songRemovedInFirebaseACB);
     return;
 }

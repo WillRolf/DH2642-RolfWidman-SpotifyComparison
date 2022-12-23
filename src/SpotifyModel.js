@@ -14,18 +14,18 @@ class SpotifyModel{
     }
 
     addToPlaylist(songToAdd){
-        if (!this.songs.some(song => song.data.id === songToAdd.data.id)){
-            this.songs= [...this.songs, songToAdd];
-            this.notifyObservers({addSong: songToAdd});
+        if (!this.songs.some(song => song.id === songToAdd.data.id)){
+            this.songs= [...this.songs, songToAdd.data];
+            this.notifyObservers({addSong: songToAdd.data});
         }
     }
     
     removeFromPlaylist(songToRemove){
         function hasSameIdCB(song){
-            return song.data.id !== songToRemove.data.id;
+            return song.id !== songToRemove.data.id;
         }
         function findSongCB(song){
-            return song.data.id === songToRemove.data.id;
+            return song.id === songToRemove.data.id;
         }
         if (this.songs.find(findSongCB)){
             this.songs= this.songs.filter(hasSameIdCB);
@@ -97,7 +97,9 @@ class SpotifyModel{
         function invokeObserverCB(obs){ obs(payload); }
         try{ this.observers.forEach(invokeObserverCB); }
         catch(err){ console.error(err); }
+        console.log("observers notified")
     }
 }
 
-export default SpotifyModel;
+const spotifyModel = new SpotifyModel();
+export default spotifyModel;

@@ -19,6 +19,7 @@ function transformSearchResultACB(data){
 }
 
 function getDetails(id, path){
+  console.log(id, path)
   return fetch(BASE_URL+path+'/?ids='+id, options)
     .then(treatHTTPResponseACB);
 }

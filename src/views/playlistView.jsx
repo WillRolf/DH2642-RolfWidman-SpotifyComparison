@@ -6,17 +6,17 @@ function PlaylistView(props){
             return <div>{artist.profile.name}</div>
         }
         function getDurationCB(){ 
-            var minutes = Math.floor(parseInt(song.data.duration.totalMilliseconds) / 60000);
-            var seconds = ((parseInt(song.data.duration.totalMilliseconds) % 60000) / 1000).toFixed(0);
+            var minutes = Math.floor(parseInt(song.duration.totalMilliseconds) / 60000);
+            var seconds = ((parseInt(song.duration.totalMilliseconds) % 60000) / 1000).toFixed(0);
             return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
         }
-        return <tr key={song.data.id} class="searchText">
-            <td><img src={song.data.albumOfTrack.coverArt.sources[0].url}class="searchPic"></img></td>
+        return <tr key={song.id} class="searchText">
+            <td><img src={song.albumOfTrack.coverArt.sources[0].url}class="searchPic"></img></td>
             <td><a /*href="#details"
                 onClick={songNameClickACB}*/>
-                {song.data.name}</a></td>
-            <td>{song.data.artists.items.map(displayArtistsCB)}</td>
-            <td>{song.data.albumOfTrack.name}</td>
+                {song.name}</a></td>
+            <td>{song.artists.items.map(displayArtistsCB)}</td>
+            <td>{song.albumOfTrack.name}</td>
             <td style="text-align:center">{getDurationCB()}</td>
             <td><button
             onClick={xButtonClickACB}
