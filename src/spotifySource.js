@@ -24,7 +24,6 @@ function getArtistDetails(id){
 }
 
 function getTrackDetails(id){
-  console.log(id)
   return fetch(BASE_URL+'tracks/?ids='+id, options)
     .then(treatHTTPResponseACB);
 }

@@ -1,5 +1,7 @@
 function SearchResultsView(props){
     function showSearchResultsCB(result){
+        console.log("result:")
+        console.log(result)
         function onPlaylistButtonPressACB(){ props.onPlaylistButtonPress(result) }
         function onLeftButtonPressACB(){ props.onLeftButtonPress(result) }
         function onRightButtonPressACB(){ props.onRightButtonPress(result) }

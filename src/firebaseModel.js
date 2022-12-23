@@ -16,7 +16,8 @@ console.log("firebase initialized")
 
 function observerRecap(model) {
     function checkPayload(payload) {
-        console.log(payload)
+        console.log("payload:");
+        console.log(payload);
     }
     model.addObserver(checkPayload)
 }
@@ -70,7 +71,6 @@ function firebaseModelPromise() {
 }
 
 function observePayloadACB(payload) {
-    console.log(payload)
     if (!payload || payload<0 ) { return; }
     
     else if(payload.leftCompare){
@@ -89,11 +89,9 @@ function observePayloadACB(payload) {
 }
 
 function updateFirebaseFromModel(model) {
-    
     model.addObserver(observePayloadACB)
     return;
 }
-console.log(updateFirebaseFromModel)
 
 function updateModelFromFirebase(model) {
     function songChangedInFirebaseACB(firebaseData){ model.setLeftSong(firebaseData.val());}
@@ -103,9 +101,8 @@ function updateModelFromFirebase(model) {
     firebase.database().ref("/rightCompare").on("value", songChangedInFirebaseACB);
 
     function songAddedInFirebaseACB(firebaseData){
-        console.log(firebaseData)
         function responseSongDataACB(song) {
-            model.addToPlaylist(song);
+            model.addToPlaylist(song.tracks[0]);
         }
         function fetchSongDataBasedOnID(songId) {
             function checkSongDuplicateCB(song) {
