@@ -81,6 +81,7 @@ function observePayloadACB(payload) {
     }
     else if (payload.addSong) {
         console.log("going to add song to firebase")
+        console.log(payload)
         firebase.database().ref("/songs/"+ payload.addSong.id).set(payload.addSong.name)
     }
     else if (payload.removeFromPlaylist) {
