@@ -1,4 +1,4 @@
-import {searchSpotify, getDetails} from "../src/spotifySource.js";
+import {searchSpotify, getTrackDetails, getArtistDetails} from "../src/spotifySource.js";
 import resolvePromise from "../src/resolvePromise.js";
 
 class SpotifyModel{
@@ -14,18 +14,19 @@ class SpotifyModel{
     }
 
     addToPlaylist(songToAdd){
-        if (!this.songs.some(song => song.data.id === songToAdd.data.id)){
-            this.songs= [...this.songs, songToAdd];
-            this.notifyObservers({addSong: songToAdd});
+        var song = getTrackDetails(songToAdd)
+        if (!this.songs.some(s => s.id === song.id)){
+            this.songs= [...this.songs, song];
+            this.notifyObservers({addSong: song});
         }
     }
     
     removeFromPlaylist(songToRemove){
         function hasSameIdCB(song){
-            return song.data.id !== songToRemove.data.id;
+            return song.id !== songToRemove.data.id;
         }
         function findSongCB(song){
-            return song.data.id === songToRemove.data.id;
+            return song.id === songToRemove.data.id;
         }
         if (this.songs.find(findSongCB)){
             this.songs= this.songs.filter(hasSameIdCB);
@@ -37,38 +38,40 @@ class SpotifyModel{
         function notifyACB(){ this.notifyObservers(); }
         if (!result){ return; }
 
-        if (!result.data.name){
-            var id = String(result.data.uri).replace("spotify:artist:","");
-            var path = "artists";
+        if (!result.name){
+            var id = String(result.uri).replace("spotify:artist:","");
+            if (this.leftCompare === id){ return; }
+            this.leftCompare = id
+            this.notifyObservers({songID: id});
+            resolvePromise(getArtistDetails(id), this.leftPromiseState, notifyACB.bind(this));
         }
         else{ 
-            var id = result.data.id;
-            var path = "tracks";
+            var id = result.id;
+            if (this.leftCompare === id){ return; }
+            this.leftCompare = id
+            this.notifyObservers({songID: id});
+            resolvePromise(getTrackDetails(id), this.leftPromiseState, notifyACB.bind(this));
         }
-
-        if (this.leftCompare === id){ return; }
-        this.leftCompare = id
-        this.notifyObservers({songID: id});
-        resolvePromise(getDetails(id, path), this.leftPromiseState, notifyACB.bind(this));
     }
 
     setRightSong(result){
         function notifyACB(){ this.notifyObservers(); }
         if (!result){ return; }
         
-        if (!result.data.name){
-            var id = String(result.data.uri).replace("spotify:artist:","");
-            var path = "artists";
+        if (!result.name){
+            var id = String(result.uri).replace("spotify:artist:","");
+            if (this.rightCompare === id){ return; }
+            this.rightCompare = id
+            this.notifyObservers({songID: id});
+            resolvePromise(getArtistDetails(id), this.rightPromiseState, notifyACB.bind(this));
         }
         else{ 
-            var id = result.data.id;
-            var path = "tracks";
+            var id = result.id;
+            if (this.rightCompare === id){ return; }
+            this.rightCompare = id
+            this.notifyObservers({songID: id});
+            resolvePromise(getTrackDetails(id), this.rightPromiseState, notifyACB.bind(this));
         }
-
-        if (this.rightCompare === id){ return; }
-        this.rightCompare = id
-        this.notifyObservers({songID: id});
-        resolvePromise(getDetails(id, path), this.rightPromiseState, notifyACB.bind(this));
     }
 
     setSearchQuery(q){
@@ -97,7 +100,9 @@ class SpotifyModel{
         function invokeObserverCB(obs){ obs(payload); }
         try{ this.observers.forEach(invokeObserverCB); }
         catch(err){ console.error(err); }
+        console.log("observers notified")
     }
 }
 
-export default SpotifyModel;
+const spotifyModel = new SpotifyModel();
+export default spotifyModel;

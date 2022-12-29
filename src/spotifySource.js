@@ -1,3 +1,4 @@
+import { createSimpleExpression } from "@vue/compiler-core";
 import {BASE_URL, API_KEY} from "../src/apiConfig.js";
 
 const options = {
@@ -7,6 +8,14 @@ const options = {
 		'X-rapidapi-Host': 'spotify23.p.rapidapi.com'
 	}
 };
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
 
 function treatHTTPResponseACB(response){ 
     if (!response.ok) throw new Error("API problem "+response.status); {
@@ -18,14 +27,22 @@ function transformSearchResultACB(data){
   if (data.tracks){ return data.tracks.items }
 }
 
-function getDetails(id, path){
-  return fetch(BASE_URL+path+'/?ids='+id, options)
+function getArtistDetails(id){
+  sleep(350);
+  return fetch(BASE_URL+'artists/?ids='+id, options)
+    .then(treatHTTPResponseACB);
+}
+
+function getTrackDetails(id){
+  sleep(350);
+  return fetch(BASE_URL+'tracks/?ids='+id, options)
     .then(treatHTTPResponseACB);
 }
 
 function searchSpotify(params){
+  sleep(350);
   return fetch(BASE_URL+'search/?q=' + params.query + '&type=' + params.type, options)
     .then(treatHTTPResponseACB).then(transformSearchResultACB);
 }
 
-export {getDetails, searchSpotify};
+export {getTrackDetails, getArtistDetails, searchSpotify};
