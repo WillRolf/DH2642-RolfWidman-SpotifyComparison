@@ -41,25 +41,21 @@ function register(user){
 
 function login(user){
     function loginUserCB(){
+        /*
         var u = auth.currentUser;
         var user_data = {
             playlist: user.playlist
         }
-        database.ref().child('users/' + u.uid).update(user_data);
+        database.ref().child('users/' + u.uid).update(user_data);*/
     }
     auth.signInWithEmailAndPassword(user.email, user.password).then(loginUserCB).catch(function(error){console.log(error)})
     window.location.hash="#home"
 }
 
-function logout(){
-    auth.signOut();
-}
+
 
 function firebaseModelPromise() {
     function makeBigPromiseACB(firebaseData) {
-        console.log("promise firebase: ")
-        console.log(firebaseData)
-        console.log(Object.keys(firebaseData.val().songs))
         if (!firebaseData.val() || Object.keys(firebaseData.val()).length === 0) { return spotifyModel; }
         const songPromiseArray = Object.keys(firebaseData.val().songs || []).map(makeSongPromiseCB);
         function createModelACB(songArray){
@@ -73,23 +69,21 @@ function firebaseModelPromise() {
     return firebase.database().ref().once("value").then(makeBigPromiseACB);
 }
 
+
 function observePayloadACB(payload) {
+    console.log(payload)
+    var u = auth.currentUser;
     if (!payload || payload<0 ) { return; }
-    
-    /*else if(payload.leftCompare){
-        firebase.database().ref("/leftCompare").set(model.leftCompare)
-    }
-    else if(payload.rightCompare){
-        firebase.database().ref("/rightCompare").set(model.rightCompare)
-    }*/
+
     else if (payload.addSong) {
         console.log("going to add song to firebase")
+        console.log("payload:")
         console.log(payload)
-        firebase.database().ref("/songs/"+ payload.addSong.id).set(payload.addSong.name)
+        database.ref().child('users/' + u.uid + '/playlist/' + payload.addSong.id).set(payload.addSong.name);
     }
     else if (payload.removeFromPlaylist) {
-        firebase.database().ref("/songs/"+ payload.removeFromPlaylist.id).set(null)
-    }    
+        database.ref().child('users/' + u.uid + '/playlist/' + payload.removeFromPlaylist.id).set(null)
+    }
 }
 
 function updateFirebaseFromModel(model) {
@@ -98,34 +92,31 @@ function updateFirebaseFromModel(model) {
 }
 
 function updateModelFromFirebase(model) {
-    /*function songChangedInFirebaseACB(firebaseData){ model.setLeftSong(firebaseData.val());}
-    firebase.database().ref("/leftCompare").on("value", songChangedInFirebaseACB);
-
-    function songChangedInFirebaseACB(firebaseData){ model.setRightSong(firebaseData.val());}
-    firebase.database().ref("/rightCompare").on("value", songChangedInFirebaseACB);*/
-
+    var u = auth.currentUser;
     function songAddedInFirebaseACB(firebaseData){
         function responseSongDataACB(songId) {
-            console.log("songId:" )
-            console.log(songId)
+            //console.log("songId:")
+            //console.log(songId)
             model.addToPlaylist(songId);
+            /*
+            const delay = ms => Promise(resolve => setTimeout(resolve, ms))
+            (async function looper(){
+              await delay(350);
+            })();*/
         }
+        /*
         function fetchSongDataBasedOnID(songId) {
-            function checkSongDuplicateCB(song) {
-                return song.id === songId;
-            }
-            return model.songs.find(checkSongDuplicateCB);    
-        }
-        if (!fetchSongDataBasedOnID(firebaseData.key)) {
-            console.log("firebaseData key:");
-            console.log(firebaseData.key);
-            responseSongDataACB(firebaseData.key);
-        }
+            console.log("songId: ")
+            console.log(songId)
+            return model.songs.find(songId);
+        }*/
+        console.log(Object.keys(firebaseData.val()))
+        Object.keys(firebaseData.val()).map(responseSongDataACB);
     }
-    firebase.database().ref("/songs").on("child_added", songAddedInFirebaseACB);
+    database.ref().child('users/' + u.uid + '/playlist').on("value", songAddedInFirebaseACB);
 
-    function songRemovedInFirebaseACB(firebaseData){ model.removeFromMenu({ id: firebaseData.key });}
-    firebase.database().ref("/songs").on("child_removed",  songRemovedInFirebaseACB);
+    function songRemovedInFirebaseACB(firebaseData){ model.removeFromPlaylist({ id: firebaseData.key });}
+    database.ref().child('users/' + u.uid + '/playlist').on("value", songRemovedInFirebaseACB);
     return;
 }
-export {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase, register, login, logout};
+export {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase, register, login};

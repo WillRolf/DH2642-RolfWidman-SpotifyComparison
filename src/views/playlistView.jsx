@@ -1,5 +1,7 @@
 function PlaylistView(props){
     function songTableRowCB(song){
+        console.log("playlist:")
+        console.log(song)
         function xButtonClickACB(){ props.onRemoveButton(song)}
         function displayArtistsCB(artist){
             return <div>{artist.name}</div>

@@ -4,29 +4,34 @@ import resolvePromise from "../src/resolvePromise.js";
 class SpotifyModel{
     constructor(songArray=[]){
         this.observers = [];
-        this.songs= songArray;
+        this.songs = songArray;
         this.leftCompare = null;
         this.rightCompare = null;
-        this.searchResultsPromiseState= {};
-        this.searchParams= {};
-        this.leftPromiseState= {};
-        this.rightPromiseState= {};
+        this.searchResultsPromiseState = {};
+        this.searchParams = {};
+        this.leftPromiseState = {};
+        this.rightPromiseState = {};
     }
 
     addToPlaylist(songToAdd){
-        var song = getTrackDetails(songToAdd)
-        if (!this.songs.some(s => s.id === song.id)){
-            this.songs= [...this.songs, song];
-            this.notifyObservers({addSong: song});
-        }
+        console.log("song model:")
+        //console.log(this.songs)
+        console.log(songToAdd)
+        getTrackDetails(songToAdd).then((response) => {
+            console.log(response)
+            if (!this.songs.some(s => s.id === response.id)){
+                this.songs= [...this.songs, response];
+                this.notifyObservers({addSong: response});
+            }
+        })
     }
     
     removeFromPlaylist(songToRemove){
         function hasSameIdCB(song){
-            return song.id !== songToRemove.data.id;
+            return song.id !== songToRemove.id;
         }
         function findSongCB(song){
-            return song.id === songToRemove.data.id;
+            return song.id === songToRemove.id;
         }
         if (this.songs.find(findSongCB)){
             this.songs= this.songs.filter(hasSameIdCB);
