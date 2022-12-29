@@ -3,10 +3,17 @@ import Search from "../presenters/searchPresenter.jsx"
 import Playlist from "../presenters/playlistPresenter.jsx"
 import Login from "../presenters/loginPresenter.jsx"
 import Show from "../presenters/show.jsx"
-import { logout } from "../firebaseModel.js"
+import firebase from "firebase/app";
+import "firebase/auth"
+const auth = firebase.auth();
 
 export default
 function App(props){
+    function logout(){
+        function removeSongsFromPlaylistCB(song){ props.model.removeFromPlaylist(song) }
+        auth.signOut();
+        props.model.songs.map(removeSongsFromPlaylistCB)
+    }
     function changeToHomeACB(){window.location.hash="#home"}
     function changeToPlaylistACB(){window.location.hash="#playlist"}
     function changeToLoginACB(){ logout();

@@ -1,4 +1,3 @@
-import { createSimpleExpression } from "@vue/compiler-core";
 import {BASE_URL, API_KEY} from "../src/apiConfig.js";
 
 const options = {
@@ -19,6 +18,7 @@ function sleep(milliseconds) {
 
 function treatHTTPResponseACB(response){ 
     if (!response.ok) throw new Error("API problem "+response.status); {
+      console.log(response)
         return response.json()};
 }
 
@@ -36,7 +36,7 @@ function getArtistDetails(id){
 function getTrackDetails(id){
   sleep(350);
   return fetch(BASE_URL+'tracks/?ids='+id, options)
-    .then(treatHTTPResponseACB);
+    .then(treatHTTPResponseACB).then((t => t.tracks[0]));
 }
 
 function searchSpotify(params){

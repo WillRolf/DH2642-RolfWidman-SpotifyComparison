@@ -9,8 +9,8 @@ const Login={
         password:"",
         playlist:""}},
     render(){ 
-        function loginUserACB(){ login({email: this.email, password: this.password, playlist: this.model.songs}) }
-        function registerUserACB(){ register({email: this.email, password: this.password, playlist: this.model.songs}) }
+        function loginUserACB(){ login({email: this.email, password: this.password, playlist: []}) }
+        function registerUserACB(){ register({email: this.email, password: this.password, playlist: []}) }
         function emailChangeACB(e){ this.email = e }
         function passwordChangeACB(p){ this.password = p }
         return(
