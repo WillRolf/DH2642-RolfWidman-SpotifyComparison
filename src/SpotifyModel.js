@@ -14,7 +14,7 @@ class SpotifyModel{
     }
 
     addToPlaylist(songToAdd){
-        var song = getTrackDetails(songToAdd.id)
+        var song = getTrackDetails(songToAdd)
         if (!this.songs.some(s => s.id === song.id)){
             this.songs= [...this.songs, song];
             this.notifyObservers({addSong: song});
