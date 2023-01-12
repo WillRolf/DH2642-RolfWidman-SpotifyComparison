@@ -18,7 +18,7 @@ const Search={
         function onAddToPlaylistACB(song){ this.model.addToPlaylist(song.data.id) }
         function onSetLeftInfoACB(result){ this.model.setLeftSong(result.data); }
         function onSetRightInfoACB(result){ this.model.setRightSong(result.data); }
-        function songInPlaylistCB(song){ return this.model.songs?this.model.songs.filter(s => s === song).length>0?true:false:false}
+        function songInPlaylistCB(song){ return this.model.songs?this.model.songs.filter(s => s.id === song.data.id).length>0?true:false:false}
         return (
             <div>
                 <SearchFormView spotifyTypeOptions={["artists", "tracks"]}
