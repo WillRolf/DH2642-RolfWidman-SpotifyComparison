@@ -8,14 +8,6 @@ const options = {
 	}
 };
 
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
-
 function treatHTTPResponseACB(response){ 
     if (!response.ok) throw new Error("API problem "+response.status); {
       console.log(response)
@@ -28,19 +20,16 @@ function transformSearchResultACB(data){
 }
 
 function getArtistDetails(id){
-  sleep(350);
   return fetch(BASE_URL+'artists/?ids='+id, options)
     .then(treatHTTPResponseACB);
 }
 
 function getTrackDetails(id){
-  sleep(350);
   return fetch(BASE_URL+'tracks/?ids='+id, options)
-    .then(treatHTTPResponseACB).then((t => t.tracks[0]));
+    .then(treatHTTPResponseACB).then(t => t.tracks);
 }
 
 function searchSpotify(params){
-  sleep(350);
   return fetch(BASE_URL+'search/?q=' + params.query + '&type=' + params.type, options)
     .then(treatHTTPResponseACB).then(transformSearchResultACB);
 }

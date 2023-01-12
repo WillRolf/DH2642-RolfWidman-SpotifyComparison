@@ -13,17 +13,15 @@ class SpotifyModel{
         this.rightPromiseState = {};
     }
 
-    addToPlaylist(songToAdd){
-        console.log("song model:")
-        //console.log(this.songs)
-        console.log(songToAdd)
-        getTrackDetails(songToAdd).then((response) => {
-            console.log(response)
-            if (!this.songs.some(s => s.id === response.id)){
-                this.songs= [...this.songs, response];
-                this.notifyObservers({addSong: response});
-            }
-        })
+    addToPlaylist(songsToAdd){
+        getTrackDetails(songsToAdd).then((response) =>
+            response.map((song) => {
+                if (!this.songs.some(s => s.id === song.id)){
+                    this.songs=[...this.songs, song];
+                    this.notifyObservers({addSong: song});
+                }
+            })
+        )
     }
     
     removeFromPlaylist(songToRemove){

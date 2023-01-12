@@ -94,29 +94,19 @@ function updateFirebaseFromModel(model) {
 function updateModelFromFirebase(model) {
     var u = auth.currentUser;
     function songAddedInFirebaseACB(firebaseData){
-        function responseSongDataACB(songId) {
-            //console.log("songId:")
-            //console.log(songId)
-            model.addToPlaylist(songId);
-            /*
-            const delay = ms => Promise(resolve => setTimeout(resolve, ms))
-            (async function looper(){
-              await delay(350);
-            })();*/
+        function responseSongDataACB(songIds) {
+            model.addToPlaylist(songIds);
         }
-        /*
-        function fetchSongDataBasedOnID(songId) {
-            console.log("songId: ")
-            console.log(songId)
-            return model.songs.find(songId);
-        }*/
-        console.log(Object.keys(firebaseData.val()))
-        Object.keys(firebaseData.val()).map(responseSongDataACB);
+        console.log(Object.keys(firebaseData))
+        responseSongDataACB(Object.keys(firebaseData).join(","));
     }
-    database.ref().child('users/' + u.uid + '/playlist').on("value", songAddedInFirebaseACB);
+    function getUserDataCB(uid){ 
+        database.ref('users/' + uid).once("value", function(snapshot){const userData = snapshot.val();songAddedInFirebaseACB(userData.playlist)});
+    }
+    auth.onAuthStateChanged(user => {if(user){ getUserDataCB(user.uid) }})
 
-    function songRemovedInFirebaseACB(firebaseData){ model.removeFromPlaylist({ id: firebaseData.key });}
-    database.ref().child('users/' + u.uid + '/playlist').on("value", songRemovedInFirebaseACB);
+    //function songRemovedInFirebaseACB(firebaseData){ model.removeFromPlaylist({ id: firebaseData.key });}
+    //database.ref().child('users/' + u.uid + '/playlist').on("value", songRemovedInFirebaseACB);
     return;
 }
 export {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase, register, login};

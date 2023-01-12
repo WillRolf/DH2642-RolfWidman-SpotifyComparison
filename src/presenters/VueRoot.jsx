@@ -14,9 +14,7 @@ const VueRoot = {
             if (!this.promiseState.data) return;
 
             updateFirebaseFromModel(this.promiseState.data);
-            if (firebase.auth().currentUser){
-                updateModelFromFirebase(this.promiseState.data);
-            }
+            updateModelFromFirebase(this.promiseState.data);
         }
             resolvePromise(firebaseModelPromise(), this.promiseState, connectToFirebaseACB.bind(this));
     },
