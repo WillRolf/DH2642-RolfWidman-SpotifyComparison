@@ -54,6 +54,8 @@ class SpotifyModel{
             this.leftCompare = id
             this.notifyObservers({songID: id});
             resolvePromise(getTrackDetails(id), this.leftPromiseState, notifyACB.bind(this));
+            console.log("promisestate:")
+            console.log(this.leftPromiseState)
         }
     }
 

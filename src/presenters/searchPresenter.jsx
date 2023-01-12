@@ -16,8 +16,8 @@ const Search={
         function onSearchTypeACB(choice){ this.searchType = choice; }
         function onSearchACB(){ resolvePromise(searchSpotify({query: this.searchQuery, type: this.searchType}), this.searchResultsPromiseState) }
         function onAddToPlaylistACB(song){ this.model.addToPlaylist(song.data.id) }
-        function onSetLeftInfoACB(result){ this.model.setLeftSong(result); }
-        function onSetRightInfoACB(result){ this.model.setRightSong(result); }
+        function onSetLeftInfoACB(result){ this.model.setLeftSong(result.data); }
+        function onSetRightInfoACB(result){ this.model.setRightSong(result.data); }
         function songInPlaylistCB(song){ return this.model.songs?this.model.songs.filter(s => s === song).length>0?true:false:false}
         return (
             <div>

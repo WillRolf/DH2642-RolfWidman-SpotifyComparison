@@ -33,13 +33,15 @@ function register(user){
         }
         database.ref().child('users/' + u.uid).set(user_data);
     }
-    if (!validateEmailCB){ return "Invalid Email" }
-    if (!validatePasswordCB){ return "Password too short! Need at least 6 characters!" }
-    auth.createUserWithEmailAndPassword(user.email, user.password).then(createUserCB).catch(function(error){console.log(error)});
-    window.location.hash="#home"
+    var err = false
+    if (!validateEmailCB){ alert("Invalid Email") }
+    if (!validatePasswordCB){ alert("Password too short! Need at least 6 characters!") }
+    function resolveErrorCB(){ if (!err){ window.location.hash="#home" } }
+    auth.createUserWithEmailAndPassword(user.email, user.password).then(createUserCB).catch(function(error){alert(error.message); err = true}).then(resolveErrorCB);
 }
 
 function login(user){
+    var err = false;
     function loginUserCB(){
         /*
         var u = auth.currentUser;
@@ -48,8 +50,8 @@ function login(user){
         }
         database.ref().child('users/' + u.uid).update(user_data);*/
     }
-    auth.signInWithEmailAndPassword(user.email, user.password).then(loginUserCB).catch(function(error){console.log(error)})
-    window.location.hash="#home"
+    function resolveErrorCB(){ if (!err){ window.location.hash="#home" } }
+    auth.signInWithEmailAndPassword(user.email, user.password).then(loginUserCB).catch(function(error){alert(error.message); err = true}).then(resolveErrorCB)
 }
 
 
@@ -92,7 +94,6 @@ function updateFirebaseFromModel(model) {
 }
 
 function updateModelFromFirebase(model) {
-    var u = auth.currentUser;
     function songAddedInFirebaseACB(firebaseData){
         function responseSongDataACB(songIds) {
             model.addToPlaylist(songIds);
@@ -105,8 +106,12 @@ function updateModelFromFirebase(model) {
     }
     auth.onAuthStateChanged(user => {if(user){ getUserDataCB(user.uid) }})
 
-    //function songRemovedInFirebaseACB(firebaseData){ model.removeFromPlaylist({ id: firebaseData.key });}
-    //database.ref().child('users/' + u.uid + '/playlist').on("value", songRemovedInFirebaseACB);
+    if (auth.currentUser){
+        var u = auth.currentUser;
+        function songRemovedInFirebaseACB(firebaseData){ model.removeFromPlaylist({ id: firebaseData.key });}
+        database.ref().child('users/' + u.uid + '/playlist').on("value", songRemovedInFirebaseACB);
+    }
+
     return;
 }
 export {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase, register, login};
